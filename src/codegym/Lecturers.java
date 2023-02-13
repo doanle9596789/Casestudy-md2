@@ -46,4 +46,13 @@ public class Lecturers extends Center implements Serializable {
     public void setFine(double fine) {
         this.fine = fine;
     }
+
+    @Override
+    public String toString() {
+        return  super.toString()+
+                "basicsalary=" + basicsalary +
+                ", bonus=" + bonus +
+                ", fine=" + fine +
+                "} " ;
+    }
 }

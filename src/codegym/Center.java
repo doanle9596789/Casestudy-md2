@@ -67,4 +67,15 @@ public class Center {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", phonenumber=" + phonenumber +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +",";
+    }
 }
