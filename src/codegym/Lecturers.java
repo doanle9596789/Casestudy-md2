@@ -10,12 +10,6 @@ public class Lecturers extends Center implements Serializable {
     public Lecturers () {
     }
 
-    public Lecturers(double basicsalary, double bonus, double fine) {
-        this.basicsalary = basicsalary;
-        this.bonus = bonus;
-        this.fine = fine;
-    }
-
     public Lecturers(int id, String name, int tuoi, int phonenumber, String email, String address, double basicsalary, double bonus, double fine) {
         super(id, name, tuoi, phonenumber, email, address);
         this.basicsalary = basicsalary;
@@ -50,9 +44,9 @@ public class Lecturers extends Center implements Serializable {
     @Override
     public String toString() {
         return  super.toString()+
-                "basicsalary=" + basicsalary +
-                ", bonus=" + bonus +
-                ", fine=" + fine +
+                "basicsalary=" + basicsalary +"\n"+
+                ", bonus=" + bonus +"\n"+
+                ", fine=" + fine +"\n"+
                 "} " ;
     }
 }

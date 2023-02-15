@@ -72,10 +72,10 @@ public class Center {
     public String toString() {
         return
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + name + '\n' +
                 ", age=" + age +
                 ", phonenumber=" + phonenumber +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +",";
+                ", email='" + email + '\n' +
+                ", address='" + address + '\n' +",";
     }
 }

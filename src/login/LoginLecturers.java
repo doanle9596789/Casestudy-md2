@@ -34,13 +34,13 @@ public class LoginLecturers {
         this.password = password;
     }
     public boolean loGinUserName(){
-        System.out.println("xin moi dang nhap ten");
+        System.out.println("xin mời nhập tên đang nhập");
         String username1=scanner.nextLine();
         if (username1.equalsIgnoreCase(username)){
             return true;
         }else return false;
     }public boolean loginPassword(){
-        System.out.println("nhap mat khau");
+        System.out.println("nhập mật khẩu");
         int password1=scanner.nextInt();
         if (password1==password){
             return true;
@@ -49,7 +49,7 @@ public class LoginLecturers {
         if (loGinUserName()&&loginPassword()){
             managerLecturers.menuManager();
         }else {
-            System.out.println("xin moi dang nhap lai");
+            System.out.println("xin mời đăng nhập lại");
             checkLogin();
         }
     }
