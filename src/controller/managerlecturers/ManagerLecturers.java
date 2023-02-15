@@ -1,6 +1,8 @@
 package controller.managerlecturers;
 
-import codegym.Lecturers;
+import model.Lecturers;
+import storage.StorageLecturers;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -8,14 +10,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ManagerLecturers {
-    List<Lecturers> listlecturers = new ArrayList<>();
+   ArrayList<Lecturers> listlecturers=new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
     public ManagerLecturers() {
     }
 
     public ManagerLecturers(List<Lecturers> listlecturers) {
-        this.listlecturers = listlecturers;
+        this.listlecturers = (ArrayList<Lecturers>) listlecturers;
     }
 
     public List<Lecturers> getListlecturers() {
@@ -23,7 +25,7 @@ public class ManagerLecturers {
     }
 
     public void setListlecturers(List<Lecturers> listlecturers) {
-        this.listlecturers = listlecturers;
+        this.listlecturers = (ArrayList<Lecturers>) listlecturers;
     }
 
     File file = new File("lecterers.dat");
@@ -40,7 +42,6 @@ public class ManagerLecturers {
                     5.Hiên thị danh sách giảng viên theo tên
                     6.Tổng lương phải trả trong một tháng cho giảng viên""");
             int menu = scanner.nextInt();
-
             switch (menu) {
                 case 1:
                     createNewLecturers();
@@ -78,51 +79,7 @@ public class ManagerLecturers {
         double fines = scanner.nextDouble();
         Lecturers lecturers1 = new Lecturers(id, name, age, phonenumber, email, address, basicsalary, bonus, fines);
         listlecturers.add(lecturers1);
-        writeLecturers();
-
+        StorageLecturers.getInstance().writeFileProduct(listlecturers);
     }
 
-    public ArrayList<Lecturers> readfileLectures() {
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        ObjectInputStream objectInputStream = null;
-        try {
-            objectInputStream = new ObjectInputStream(inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (objectInputStream!=null) {
-                ArrayList<Lecturers> writeObj =null;
-                try {
-                    writeObj = (ArrayList<Lecturers>) objectInputStream.readObject();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-                return writeObj;
-            }
-            return new ArrayList<>();
-        }
-
-    }
-
-    public void writeLecturers() {
-        try {
-            OutputStream os = new FileOutputStream(file);
-            ObjectOutputStream oss = new ObjectOutputStream(os);
-            for (Lecturers k : listlecturers
-            ) {
-                oss.writeObject(k);
-            }
-            os.flush();
-            oss.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

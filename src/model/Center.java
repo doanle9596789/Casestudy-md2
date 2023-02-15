@@ -1,4 +1,4 @@
-package codegym;
+package model;
 
 public class Center {
     private int id;

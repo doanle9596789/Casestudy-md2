@@ -1,4 +1,4 @@
-package codegym;
+package model;
 
 public class Student extends Center {
    private double averageofsubject;
