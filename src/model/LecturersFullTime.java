@@ -2,15 +2,15 @@ package model;
 
 import java.io.Serializable;
 
-public class Lecturers extends Center implements Serializable {
+public class LecturersFullTime extends Center {
     private double basicsalary;
     private double bonus;
     private double fines;
 
-    public Lecturers() {
+    public LecturersFullTime() {
     }
 
-    public Lecturers(int id, String name, int tuoi, int phonenumber, String email, String address, double basicsalary, double bonus, double fines) {
+    public LecturersFullTime(int id, String name, int tuoi, int phonenumber, String email, String address, double basicsalary, double bonus, double fines) {
         super(id, name, tuoi, phonenumber, email, address);
         this.basicsalary = basicsalary;
         this.bonus = bonus;
@@ -43,15 +43,15 @@ public class Lecturers extends Center implements Serializable {
 
     @Override
     public String toString() {
-        return "Lecturers{" + "id=" + getId() +
+        return "Lecturers:" + "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", age=" + getAge() +
                 ", phonenumber=" + getPhonenumber() +
                 ", email='" + getEmail() + '\'' +
                 ", address='" + getAddress() + '\'' +
-                "basicsalary=" + basicsalary +
+                ", basicsalary=" + basicsalary +
                 ", bonus=" + bonus +
-                ", fine=" + fines +"\n"+
-                "} " ;
+                ", fine=" + fines + "\n";
+
     }
 }

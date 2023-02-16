@@ -43,6 +43,7 @@ public class LoginLecturers {
     }public boolean loginPassword(){
         System.out.println("nhập mật khẩu");
         int password1=scanner.nextInt();
+        scanner.nextLine();
         if (password1==password){
             return true;
         }else return false;
@@ -51,7 +52,6 @@ public class LoginLecturers {
             menu.menuManagerLecturers();
         }else {
             System.out.println("xin mời đăng nhập lại");
-            scanner.nextLine();
             checkLogin();
         }
     }
