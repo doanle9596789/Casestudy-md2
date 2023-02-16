@@ -10,61 +10,26 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ManagerLecturers {
-    static ArrayList<Lecturers> listlecturers = new ArrayList<>();
-
-    static {
-        try {
-            listlecturers = StorageLecturers.readFilelecturers();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public ManagerLecturers(List<Lecturers> listlecturers) {
+        this.listlecturers = listlecturers;
     }
-    Scanner scanner = new Scanner(System.in);
+
+    public List<Lecturers> listlecturers;
 
     public ManagerLecturers() {
-    }
 
-    public ManagerLecturers(List<Lecturers> listlecturers) {
-        this.listlecturers = (ArrayList<Lecturers>) listlecturers;
-    }
-
-    public List<Lecturers> getListlecturers() {
-        return listlecturers;
-    }
-
-    public void setListlecturers(List<Lecturers> listlecturers) {
-        this.listlecturers = (ArrayList<Lecturers>) listlecturers;
+        try {
+            this.listlecturers = StorageLecturers.readFilelecturers();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     File file = new File("lecterers.dat");
 
-    public void menuManager() {
-        do {
-            System.out.println("xin mời chọn menu");
-            System.out.println("------------------");
-            System.out.println("""
-                    1.Thêm giảng viên
-                    2.Sửa giảng viên
-                    3.Xóa Giảng Viên
-                    4.Tìm giảng viên theo tên
-                    5.Hiên thị danh sách giảng viên theo tên
-                    6.Tổng lương phải trả trong một tháng cho giảng viên""");
-            int menu = scanner.nextInt();
-            switch (menu) {
-                case 1:
-                    createNewLecturers();
-                    break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                    System.out.println(listlecturers);
-                case 6:
-            }
-        } while (true);
-    }
 
-    public void createNewLecturers() {
+
+    public void createNewLecturers(Scanner scanner) {
         System.out.println("xin mời nhập id");
         int id = scanner.nextInt();
         System.out.println("xin mời nhập tên");
@@ -92,8 +57,52 @@ public class ManagerLecturers {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public void editById(int id,Scanner scanner){
+        removeLecturers(id);
+        createNewLecturers(scanner);
+        try {
+            StorageLecturers.writeFileLecturers(listlecturers);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
+    public void removeLecturers(int id) {
+        int check=-1;
+        for (Lecturers k:listlecturers){
+            if (k.getId()==id){
+              check=id;
+            }
+        }if (check<0){
+            System.out.println("không có id bạn nhập");
+        }else {
+            listlecturers.remove(listlecturers.get(id));
+            try {
+                StorageLecturers.writeFileLecturers(listlecturers);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }public void searchLecturers(String name1){
+        int check=-1;
+        for (int i=0;i<listlecturers.size();i++){
+            if(listlecturers.get(i).getName().equals(name1)){
+                check=i;
+
+            }
+        }
+        if (check<0){
+            System.out.println("Tên không tồn tại");
+
+        }else System.out.println(listlecturers.get(check));
+    }
+    public double totalSalary(){
+        double total=0.0;
+        for (Lecturers k1:listlecturers) {
+           total=( k1.getBasicsalary()+k1.getBonus()-k1.getFines());
+        }return total;
+    }
 }

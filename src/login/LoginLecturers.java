@@ -1,11 +1,12 @@
 package login;
 
 import controller.managerlecturers.ManagerLecturers;
+import view.Menu;
 
 import java.util.Scanner;
 
 public class LoginLecturers {
-    ManagerLecturers managerLecturers=new ManagerLecturers();
+    Menu menu=new Menu();
     Scanner scanner=new Scanner(System.in);
     private String username="doanle";
     private int password=12345;
@@ -47,9 +48,10 @@ public class LoginLecturers {
         }else return false;
     }public void checkLogin(){
         if (loGinUserName()&&loginPassword()){
-            managerLecturers.menuManager();
+            menu.menuManagerLecturers();
         }else {
             System.out.println("xin mời đăng nhập lại");
+            scanner.nextLine();
             checkLogin();
         }
     }

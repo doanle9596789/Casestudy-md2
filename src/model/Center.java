@@ -1,7 +1,9 @@
 package model;
 
-public class Center {
-    private int id;
+import java.io.Serializable;
+
+public class Center implements Serializable {
+    protected int id;
     private String name;
     private int age;
     private int phonenumber;
@@ -36,11 +38,11 @@ public class Center {
         this.name = name;
     }
 
-    public int getTuoi() {
+    public int getAge() {
         return age;
     }
 
-    public void setTuoi(int tuoi) {
+    public void setAge(int tuoi) {
         this.age = tuoi;
     }
 
@@ -72,10 +74,11 @@ public class Center {
     public String toString() {
         return
                 "id=" + id +
-                ", name='" + name + '\n' +
+                ", name='" + name + '\'' +
                 ", age=" + age +
                 ", phonenumber=" + phonenumber +
-                ", email='" + email + '\n' +
-                ", address='" + address + '\n' +",";
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' ;
     }
+
 }
