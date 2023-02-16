@@ -6,7 +6,6 @@ import login.LoginLecturers;
 import java.util.Scanner;
 
 public class Main {
-    public static ManagerLecturers managerLecturers = new ManagerLecturers();
     public static void main(String[] args) {
         LoginLecturers loginLecturers=new LoginLecturers();
         Scanner sc=new Scanner(System.in);

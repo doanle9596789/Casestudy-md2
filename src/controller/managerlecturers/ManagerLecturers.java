@@ -1,7 +1,7 @@
 package controller.managerlecturers;
 
 import model.Lecturers;
-import storage.StorageLecturers;
+import model.StorageLecturers;
 
 
 import java.io.*;
@@ -10,7 +10,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ManagerLecturers {
-   ArrayList<Lecturers> listlecturers=new ArrayList<>();
+    static ArrayList<Lecturers> listlecturers = new ArrayList<>();
+
+    static {
+        try {
+            listlecturers = StorageLecturers.readFilelecturers();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     Scanner scanner = new Scanner(System.in);
 
     public ManagerLecturers() {
@@ -79,7 +87,13 @@ public class ManagerLecturers {
         double fines = scanner.nextDouble();
         Lecturers lecturers1 = new Lecturers(id, name, age, phonenumber, email, address, basicsalary, bonus, fines);
         listlecturers.add(lecturers1);
-        StorageLecturers.getInstance().writeFileProduct(listlecturers);
+        try {
+            StorageLecturers.writeFileLecturers(listlecturers);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }
