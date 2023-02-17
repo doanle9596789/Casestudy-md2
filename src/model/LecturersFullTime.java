@@ -1,6 +1,7 @@
 package model;
 
-import java.io.Serializable;
+
+import view.Menu;
 
 public class LecturersFullTime extends Center {
     private double basicsalary;
@@ -10,8 +11,8 @@ public class LecturersFullTime extends Center {
     public LecturersFullTime() {
     }
 
-    public LecturersFullTime(int id, String name, int tuoi, int phonenumber, String email, String address, double basicsalary, double bonus, double fines) {
-        super(id, name, tuoi, phonenumber, email, address);
+    public LecturersFullTime(String id, String name, String age, String phonenumber, String email, String address, double basicsalary, double bonus, double fines) {
+        super(id, name, age, phonenumber, email, address);
         this.basicsalary = basicsalary;
         this.bonus = bonus;
         this.fines = fines;
@@ -38,20 +39,15 @@ public class LecturersFullTime extends Center {
     }
 
     public void setFines(double fines) {
-        this.fines= fines;
+        this.fines = fines;
     }
 
     @Override
     public String toString() {
-        return "Lecturers:" + "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", age=" + getAge() +
-                ", phonenumber=" + getPhonenumber() +
-                ", email='" + getEmail() + '\'' +
-                ", address='" + getAddress() + '\'' +
-                ", basicsalary=" + basicsalary +
+        return "LecturersFullTime{" +
+                "basicsalary=" + basicsalary +
                 ", bonus=" + bonus +
-                ", fine=" + fines + "\n";
-
+                ", fines=" + fines +
+                "} " + super.toString();
     }
 }

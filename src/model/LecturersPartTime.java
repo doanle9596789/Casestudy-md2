@@ -9,7 +9,7 @@ public class LecturersPartTime extends Center {
     public LecturersPartTime() {
     }
 
-    public LecturersPartTime(int id, String name, int age, int phonenumber, String email, String address, double hourlySalary, double workingHours) {
+    public LecturersPartTime(String id, String name, String age, String phonenumber, String email, String address, double hourlySalary, double workingHours) {
         super(id, name, age, phonenumber, email, address);
         this.hourlySalary = hourlySalary;
         this.workingHours = workingHours;
@@ -33,10 +33,9 @@ public class LecturersPartTime extends Center {
 
     @Override
     public String toString() {
-        return "LecturersPartTime{" + super.toString()+
+        return "LecturersPartTime{" +
                 "hourlySalary=" + hourlySalary +
                 ", workingHours=" + workingHours +
-                ", id=" + id +
-                "} " ;
+                "} " + super.toString();
     }
 }

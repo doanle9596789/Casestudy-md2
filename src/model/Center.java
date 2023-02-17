@@ -3,17 +3,17 @@ package model;
 import java.io.Serializable;
 
 public class Center implements Serializable {
-    protected int id;
+    private  String id;
     private String name;
-    private int age;
-    private int phonenumber;
+    private String age;
+    private String phonenumber;
     private String email;
     private String address;
 
     public Center() {
     }
 
-    public Center(int id, String name, int age, int phonenumber, String email, String address) {
+    public Center(String id, String name, String age, String phonenumber, String email, String address) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -22,11 +22,11 @@ public class Center implements Serializable {
         this.address = address;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -38,19 +38,19 @@ public class Center implements Serializable {
         this.name = name;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int tuoi) {
-        this.age = tuoi;
+    public void setAge(String age) {
+        this.age = age;
     }
 
-    public int getPhonenumber() {
+    public String getPhonenumber() {
         return phonenumber;
     }
 
-    public void setPhonenumber(int phonenumber) {
+    public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
     }
 
@@ -72,13 +72,13 @@ public class Center implements Serializable {
 
     @Override
     public String toString() {
-        return
-                "id=" + id +
+        return "Center{" +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", age=" + age +
-                ", phonenumber=" + phonenumber +
+                ", age='" + age + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
                 ", email='" + email + '\'' +
-                ", address='" + address + '\'' ;
+                ", address='" + address + '\'' +
+                '}';
     }
-
 }
