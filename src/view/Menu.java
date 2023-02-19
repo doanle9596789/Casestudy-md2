@@ -27,8 +27,8 @@ public class Menu {
                     8.Sort Lecturers By Id
                     9.Back to Menu CodeGym""");
 
-            int menu = managerLecturers.checkInt(scanner);
-            switch (menu) {
+            int input = managerLecturers.checkInt(scanner);
+            switch (input) {
                 case 1:
                     System.out.println("enter the lecturer need more");
                     String nameLecturers=scanner.nextLine();
@@ -76,8 +76,8 @@ public class Menu {
                 7.list of students who did not pass the module     
                 8.Sort Student By Id
                 9.Back to Menu CodeGym""");
-        int menu = managerStudent.checkInt(scanner);
-        switch (menu){
+        int input = managerStudent.checkInt(scanner);
+        switch (input){
             case 1:
                 managerStudent.create();
                 break;
@@ -101,15 +101,17 @@ public class Menu {
             System.out.println("-------------------");
             System.out.println("""
                     1.Login Manager
-                    2.Login Lecturers""");
-            int menu =managerLecturers.checkInt(scanner);
-            switch (menu) {
+                    2.Login Lecturers
+                    3.Enter exit program""");
+            int input =managerLecturers.checkInt(scanner);
+            switch (input) {
                 case 1:
                     loginLecturers.checkLoginLecturers();
                     break;
                 case 2:
                     loginStudent.checkLoginStudent();
                     break;
+                case 3:System.exit(input);
             }
         } while (true);
     }
