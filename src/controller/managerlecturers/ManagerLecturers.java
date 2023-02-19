@@ -3,73 +3,188 @@ package controller.managerlecturers;
 import model.Center;
 import model.LecturersFullTime;
 import model.LecturersPartTime;
-import model.StorageLecturers;
-import view.Menu;
+import storage.IReadWriteFile;
+import storage.ReadWriteFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
-
+import java.util.*;
 
 public class ManagerLecturers {
-Scanner scanner=new Scanner(System.in);
-    public ManagerLecturers(List<Center> listlecturers) {
-        this.listlecturers = listlecturers;
+    Scanner scanner = new Scanner(System.in);
+    private static ManagerLecturers instance;
+    private final List<Center> listlecturers;
+    private final IReadWriteFile iReadWriteFile = ReadWriteFile.getInstance();
+
+    private ManagerLecturers() {
+        this.listlecturers = iReadWriteFile.readToFile();
     }
 
-    public List<Center> listlecturers;
-
-    public ManagerLecturers() {
-        try {
-            this.listlecturers = new ArrayList<>();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+    public static ManagerLecturers getInstance() {
+        if (instance == null) {
+            instance = new ManagerLecturers();
         }
-    }
-    public void add(String nameLecturers) {
-        Center center=create(nameLecturers);
-        listlecturers.add(center);
-        try {
-            StorageLecturers.writeFileLecturers(listlecturers);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        return instance;
     }
 
-    public Center create(String nameLecturers) {
-        String id =getID();
-        String name = getName();
-        String address = getAddress();
-        String age = getAge();
-        String phoneNumber = getPhoneNumber();
-        String email = getEmail();
+    public void sortLecturersById(){
+        sortLecturers();
+        iReadWriteFile.writeToFile(listlecturers);
+    }
+
+    public void create(String nameLecturers) {
         if (Objects.equals(nameLecturers, "LecturersFullTime")) {
-            System.out.println(" Enter the base salary of a full-time lecturer");
-            double basicsalary  = Double.parseDouble(scanner.nextLine());
+            String id = getID();
+            String name =getName();
+            String address =getAddress();
+            String age =getAge();
+            String phoneNumber =getPhoneNumber();
+            String email =getEmail();
+            System.out.println(" Enter the basic salary of a full-time lecturer");
+            double basicSalary = Double.parseDouble(scanner.nextLine());
             System.out.println("enter bonus");
-            double bonus=Double.parseDouble((scanner.nextLine()));
+            double bonus = Double.parseDouble((scanner.nextLine()));
             System.out.println("enter fines");
-            double fines=Double.parseDouble(scanner.nextLine());
-            return new LecturersFullTime(id, name, address, age, phoneNumber, email,basicsalary,bonus,fines);
-
-        } else {
+            double fines = Double.parseDouble(scanner.nextLine());
+            listlecturers.add( new LecturersFullTime(id, name, age, phoneNumber, email, address, basicSalary, bonus, fines));
+        } else if (Objects.equals(nameLecturers, "LecturersPartTime")){
+            String id = getID();
+            String name =getName();
+            String address =getAddress();
+            String age =getAge();
+            String phoneNumber =getPhoneNumber();
+            String email =getEmail();
             System.out.println("enter hourlySalary");
-            double hourlySalary=Double.parseDouble(scanner.nextLine());
+            double hourlySalary = Double.parseDouble(scanner.nextLine());
             System.out.println("enter workingHours");
-            double workingHours=Double.parseDouble(scanner.nextLine());
-            return new LecturersPartTime(id,name,age,phoneNumber,email,address,hourlySalary,workingHours);
+            double workingHours = Double.parseDouble(scanner.nextLine());
+            listlecturers.add(new LecturersPartTime(id, name, age, phoneNumber, email, address, hourlySalary, workingHours));
+        }else {
+            System.out.println("Please re-enter");
         }
+        iReadWriteFile.writeToFile(listlecturers);
+    }
+    public double totalSalaryFullTime(){
+             double total=0;
+        for (Center gv:listlecturers) {
+            if (gv instanceof LecturersFullTime){
+                total+=(((LecturersFullTime) gv).getBasicsalary()+ ((LecturersFullTime) gv).getBonus()- ((LecturersFullTime) gv).getFines());
+            }
+        }return total;
+    }
+    public double totalSalaryPartTime(){
+        double total=0;
+        for (Center gv:listlecturers) {
+            if (gv instanceof LecturersPartTime){
+                total+=(((LecturersPartTime) gv).getHourlySalary()* ((LecturersPartTime) gv).getWorkingHours());
+            }
+        }return total;
 
-}
+    }
+    public void sortLecturers() {
+        listlecturers.sort(new Comparator<Center>() {
+            @Override
+            public int compare(Center o1, Center o2) {
+                return (Integer.parseInt(o1.getId()))-(Integer.parseInt(o2.getId()));
+            }
 
+        });
+    }
+
+
+    public void showLecturers() {
+        for (Center gv : listlecturers) {
+            System.out.println(gv);
+            System.out.println("_______________");
+
+        }
+    }
+
+    public void editByName() {
+
+        System.out.println("Enter the teacher's name to edit");
+        String namer = scanner.nextLine();
+        int check = -1;
+        for (int i = 0; i < listlecturers.size(); i++) {
+            if (listlecturers.get(i).getName().equals(namer)) {
+                check = i;
+
+            }
+
+        }
+        if (check < 0) {
+            System.out.println("name is not in the list");
+        } else {
+            String id = getID();
+            String name = getName();
+            String address = getAddress();
+            String age = getAge();
+            String phone =getPhoneNumber();
+            String email = getEmail();
+            listlecturers.get(check).setId(id);
+            listlecturers.get(check).setName(name);
+            listlecturers.get(check).setAddress(address);
+            listlecturers.get(check).setAge(age);
+            listlecturers.get(check).setPhoneNumber(phone);
+            listlecturers.get(check).setEmail(email);
+            if (listlecturers.get(check) instanceof LecturersFullTime) {
+                System.out.println("  Enter the base salary of a full-time lecturer");
+                double basicSalary = checkDouble(scanner);
+                ((LecturersFullTime) listlecturers.get(check)).setBasicsalary(basicSalary);
+                System.out.println("enter bonus");
+                double bonus =checkDouble(scanner);
+                ((LecturersFullTime) listlecturers.get(check)).setBonus(bonus);
+                System.out.println("enter fines");
+                double fines = checkDouble(scanner);
+                ((LecturersFullTime) listlecturers.get(check)).setFines(fines);
+            } else if (listlecturers.get(check) instanceof LecturersPartTime) {
+                System.out.println("enter hourlySalary");
+                double hourlySalary = checkDouble(scanner);
+                ((LecturersPartTime) listlecturers.get(check)).setHourlySalary(hourlySalary);
+                System.out.println("enter workingHours");
+                double workingHours =checkDouble(scanner);
+                ((LecturersPartTime) listlecturers.get(check)).setHourlySalary(workingHours);
+
+            }
+
+        }iReadWriteFile.writeToFile(listlecturers);
+    }
+    public void removeId() {
+        System.out.println("enter the id to delete :");
+        String id=scanner.nextLine();
+        int check=-1;
+        for (int i=0;i<listlecturers.size();i++){
+            if(listlecturers.get(i).getId().equals(id)){
+                check=i;
+            }
+        }
+        if (check<0){
+            System.out.println("id does not exist");
+        }else {
+            listlecturers.remove(check);
+        }
+        iReadWriteFile.writeToFile(listlecturers);
+    }
+    public  void findByName(){
+
+        System.out.println("Enter the name you want to search ");
+        String name=scanner.nextLine();
+        int check=-1;
+        for (int i=0;i<listlecturers.size();i++){
+            if(listlecturers.get(i).getName().equals(name)){
+                check=i;
+                System.out.println(listlecturers.get(check));
+            }
+        }
+        if (check<0){
+            System.out.println("Name does not exist");
+
+        }
+    }
     private String getEmail() {
         while (true) {
             try {
-                System.out.println("nhập email");
+                System.out.println("enter email");
                 String email = scanner.nextLine();
-                if (Regex.validateEmail(email)) {
+                if (controller.managerlecturers.Regex.validateEmail(email)) {
                     boolean check = true;
                     for (Center nv :listlecturers) {
                         if (nv.getEmail().equals(email)) {
@@ -81,209 +196,115 @@ Scanner scanner=new Scanner(System.in);
                     if (check) {
                         return email;
                     } else {
-                        System.out.println("email đã tồn tại");
+                        System.out.println("Email already exists");
                     }
                 } else throw new Exception();
             } catch (Exception e) {
-                System.out.println("nhập sai định dạng vui lòng nhập lại email");
+                System.out.println("Enter the wrong format, please re-enter your email");
             }
         }
     }
 
-    private String getPhoneNumber() {
+    public String getPhoneNumber() {
         while (true) {
             try {
-                System.out.println("nhập số điện thoại :");
-                String phonenumber = scanner.nextLine();
-                if (Regex.validatePhone(phonenumber)) {
+                System.out.println("Enter your phone number :");
+                String phoneNumber = scanner.nextLine();
+                if (controller.managerlecturers.Regex.validatePhone(phoneNumber)) {
                     boolean check = true;
-                    for (Center nv :listlecturers) {
-                        if (nv.getPhonenumber().equals(phonenumber)) {
+                    for (Center nv : listlecturers) {
+                        if (nv.getPhonenumber().equals(phoneNumber)) {
                             check = false;
                             break;
                         }
 
                     }
                     if (check) {
-                        return phonenumber;
+                        return phoneNumber;
                     } else {
-                        System.out.println("số điên thoại đã tồn tại :");
+                        System.out.println("phone number already exists:");
                     }
                 } else throw new Exception();
 
             } catch (Exception e) {
-                System.out.println("bạn phải nhập đúng định dạng 10 số.....");
+                System.out.println("you must enter the correct 10 number format.....");
             }
 
         }
     }
-    private String getAge() {
+
+    public String getAge() {
         while (true) {
             try {
-                System.out.println("nhập tuổi nhân viên:");
+                System.out.println("Enter the Lecturers age:");
                 String age = scanner.nextLine();
                 if (Integer.parseInt(age) < 15 || Integer.parseInt(age) > 60) {
                     throw new Exception();
                 } else return age;
             } catch (Exception e) {
-                System.out.println("nhập lại tuổi nhân viên từ 15 tuổi đến 59 tuổi");
+                System.out.println("re-enter employee age from 15 years old to 59 years old");
             }
         }
     }
 
 
-    private String getAddress() {
+    public String getAddress() {
 
-        System.out.println("nhập địa chỉ :");
+        System.out.println("enter address :");
         return scanner.nextLine();
     }
 
-    private String getName() {
+    public String getName() {
         while (true) {
             try {
-                System.out.println("nhập name:");
+                System.out.println("enter name:");
                 String name = scanner.nextLine();
-                if (Regex.validateName(name)) {
+                if (controller.managerlecturers.Regex.validateName(name)) {
                     return name;
                 } else throw new Exception();
             } catch (Exception e) {
-                System.out.println("name phải đúng định dạng :");
+                System.out.println("name must be in correct format:");
             }
         }
 
     }
 
-    private String getID() {
+    public String getID() {
         while (true) {
             try {
                 System.out.println("enter id :");
                 String id = scanner.nextLine();
-                if (Regex.validateId(id)) {
+                if (controller.managerlecturers.Regex.validateId(id)) {
 
-                    for (Center gv :listlecturers) {
+                    for (Center gv : listlecturers) {
                         if (gv.getId().equals(id)) {
                             throw new Exception();
                         }
                         break;
                     }
                     return id;
-                }else System.out.println("id nhập đúng định dạng là số (0-9)");
+                } else System.out.println("id input in the correct format is number (0-9)");
             } catch (Exception e) {
-                System.out.println("NHhập id trùng,bạn nhập lại xem còn trùng không!!!!");
+                System.out.println("Enter the same id, re-enter it to see if it still matches!!!!");
             }
         }
 
 
     }
+    public int checkInt(Scanner scanner) {
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("Enter incorrectly, please re-enter");
+        }
+        return checkInt(scanner);
+    }
+    public  double checkDouble(Scanner scanner) {
+        try {
+            return Double.parseDouble(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("Enter incorrectly, please re-enter");
+        }
+        return checkDouble(scanner);
+    }
 }
-
-
-//    public void createNewLecturersFullTime(Scanner scanner) {
-//        System.out.println("xin mời nhập id");
-//        int id = scanner.nextInt();
-//        System.out.println("xin mời nhập tên");
-//        scanner.nextLine();
-//        String name = scanner.nextLine();
-//        System.out.println("xin mời nhập tuổi");
-//        int age = scanner.nextInt();
-//        System.out.println("xin mời nhập số địen thoai");
-//        int phonenumber = scanner.nextInt();
-//        System.out.println("xin mời nhập email");
-//        scanner.nextLine();
-//        String email = scanner.nextLine();
-//        System.out.println("xin mời nhập địa chỉ");
-//        String address = scanner.nextLine();
-//        System.out.println("xin mời nhập lương cơ bản");
-//        double basicsalary = scanner.nextDouble();
-//        System.out.println("xin mời nhập tiền thưởng");
-//        double bonus = scanner.nextDouble();
-//        System.out.println("xin mời nhập tiền phạt");
-//        double fines = scanner.nextDouble();
-//        LecturersFullTime lecturers1 = new LecturersFullTime(id, name, age, phonenumber, email, address, basicsalary, bonus, fines);
-//        listlecturers.add(lecturers1);
-//        try {
-//            StorageLecturers.writeFileLecturers(listlecturers);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//    public void createNewLecturersPartTime(Scanner scanner) {
-//        System.out.println("xin mời nhập id");
-//        int id1 = scanner.nextInt();
-//        System.out.println("xin mời nhập tên");
-//        scanner.nextLine();
-//        String name1 = scanner.nextLine();
-//        System.out.println("xin mời nhập tuổi");
-//        int age1 = scanner.nextInt();
-//        System.out.println("xin mời nhập số địen thoai");
-//        int phonenumber1 = scanner.nextInt();
-//        System.out.println("xin mời nhập email");
-//        scanner.nextLine();
-//        String email1 = scanner.nextLine();
-//        System.out.println("xin mời nhập địa chỉ");
-//        String address1 = scanner.nextLine();
-//        System.out.println("xin mời nhập lương theo giờ");
-//        double hourlySalary = scanner.nextDouble();
-//        System.out.println("nhập số giờ làm việc theo tháng");
-//        double workingHours=scanner.nextDouble();
-//        LecturersPartTime lecturersPartTime=new LecturersPartTime(id1,name1,age1,phonenumber1,email1,address1,hourlySalary,workingHours);
-//        listlecturers.add(lecturersPartTime);
-//        try {
-//            StorageLecturers.writeFileLecturers(listlecturers);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void editById(int id){
-//        for (Center c:listlecturers) {
-//            if (c.getId()==id){
-//
-//
-//            }
-//        }
-//
-//        try {
-//            StorageLecturers.writeFileLecturers(listlecturers);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//    }
-//
-//    public void removeLecturers(int id) {
-//        int check=-1;
-//        for (int i=0;i<listlecturers.size();i++){
-//            if(listlecturers.get(i).getId()==id){
-//                check=i;
-//            }
-//        }
-//        if (check<0){
-//            System.out.println("id không tồn tại");
-//        }else {
-//            listlecturers.remove(check);
-//        }
-//            try {
-//                StorageLecturers.writeFileLecturers(listlecturers);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    public void searchLecturers(String name1){
-//        int check=-1;
-//        for (int i=0;i<listlecturers.size();i++){
-//            if(listlecturers.get(i).getName().equals(name1)){
-//                check=i;
-//
-//            }
-//        }
-//        if (check<0){
-//            System.out.println("Tên không tồn tại");
-//
-//        }else {
-//            System.out.println("thông tin giảng viên bạn muốn tìm là");
-//            System.out.println(listlecturers.get(check));
-//        }
-//    }
-//
-//}

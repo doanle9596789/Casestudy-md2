@@ -5,16 +5,16 @@ import view.Menu;
 
 import java.util.Scanner;
 
-public class LoginLecturers {
+public class LoginStudent {
     Menu menu=new Menu();
     Scanner scanner=new Scanner(System.in);
-    private String username="doanle";
-    private int password=12345;
+    private String username="minhdoan";
+    private int password=54321;
 
-    public LoginLecturers() {
+    public LoginStudent() {
     }
 
-    public LoginLecturers(String username, int password) {
+    public LoginStudent(String username, int password) {
         this.username = username;
         this.password = password;
     }
@@ -47,12 +47,12 @@ public class LoginLecturers {
         if (password1==password){
             return true;
         }else return false;
-    }public void checkLoginLecturers(){
+    }public void checkLoginStudent(){
         if (loGinUserName()&&loginPassword()){
-            menu.menuManagerLecturers();
+            menu.menuManagerStudent();
         }else {
             System.out.println("Please login again");
-            checkLoginLecturers();
+            checkLoginStudent();
         }
     }
 }

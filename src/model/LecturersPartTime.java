@@ -33,9 +33,9 @@ public class LecturersPartTime extends Center {
 
     @Override
     public String toString() {
-        return "LecturersPartTime{" +
+        return "LecturersPartTime:" +  super.toString()+","+
                 "hourlySalary=" + hourlySalary +
                 ", workingHours=" + workingHours +
-                "} " + super.toString();
+                "\n ";
     }
 }

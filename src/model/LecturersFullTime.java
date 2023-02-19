@@ -4,26 +4,26 @@ package model;
 import view.Menu;
 
 public class LecturersFullTime extends Center {
-    private double basicsalary;
+    private double basicSalary;
     private double bonus;
     private double fines;
 
     public LecturersFullTime() {
     }
 
-    public LecturersFullTime(String id, String name, String age, String phonenumber, String email, String address, double basicsalary, double bonus, double fines) {
-        super(id, name, age, phonenumber, email, address);
-        this.basicsalary = basicsalary;
+    public LecturersFullTime(String id, String name, String age, String phoneNumber, String email, String address, double basicSalary, double bonus, double fines) {
+        super(id, name, age, phoneNumber, email, address);
+        this.basicSalary = basicSalary;
         this.bonus = bonus;
         this.fines = fines;
     }
 
     public double getBasicsalary() {
-        return basicsalary;
+        return basicSalary;
     }
 
-    public void setBasicsalary(double basicsalary) {
-        this.basicsalary = basicsalary;
+    public void setBasicsalary(double basicSalary) {
+        this.basicSalary = basicSalary;
     }
 
     public double getBonus() {
@@ -44,10 +44,10 @@ public class LecturersFullTime extends Center {
 
     @Override
     public String toString() {
-        return "LecturersFullTime{" +
-                "basicsalary=" + basicsalary +
+        return "LecturersFullTime:" + super.toString()+","+
+                "basicsalary=" + basicSalary +
                 ", bonus=" + bonus +
                 ", fines=" + fines +
-                "} " + super.toString();
+                "\n ";
     }
 }
