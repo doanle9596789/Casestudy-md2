@@ -98,28 +98,28 @@ public class ManagerLecturers {
         }
     }
 
-    public void editByName() {
+    public void editById() {
 
-        System.out.println("Enter the teacher's name to edit");
-        String namer = scanner.nextLine();
+        System.out.println("Enter the teacher's id to edit");
+        String id = scanner.nextLine();
         int check = -1;
         for (int i = 0; i < listlecturers.size(); i++) {
-            if (listlecturers.get(i).getName().equals(namer)) {
+            if (listlecturers.get(i).getId().equals(id)) {
                 check = i;
 
             }
 
         }
         if (check < 0) {
-            System.out.println("name is not in the list");
+            System.out.println("id is not in the list");
         } else {
-            String id = getID();
+            String id1 = getID();
             String name = getName();
             String address = getAddress();
             String age = getAge();
             String phone =getPhoneNumber();
             String email = getEmail();
-            listlecturers.get(check).setId(id);
+            listlecturers.get(check).setId(id1);
             listlecturers.get(check).setName(name);
             listlecturers.get(check).setAddress(address);
             listlecturers.get(check).setAge(age);

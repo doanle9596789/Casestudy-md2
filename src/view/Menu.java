@@ -25,8 +25,8 @@ public class Menu {
                     6.Total salary to be paid in a month for Full Time lecturers
                     7.Total salary to be paid to Part Time lecturers
                     8.Sort Lecturers By Id
-                    9.Back to Menu CodeGym""");
-
+                    9.Back to Menu CodeGym
+                    0.Exit program""");
             int input = managerLecturers.checkInt(scanner);
             switch (input) {
                 case 1:
@@ -34,7 +34,7 @@ public class Menu {
                     String nameLecturers=scanner.nextLine();
                     managerLecturers.create(nameLecturers);
                     break;
-                case 2:managerLecturers.editByName();
+                case 2:managerLecturers.editById();
                 break;
 
                 case 3:managerLecturers.removeId();
@@ -54,8 +54,8 @@ public class Menu {
                 case 8: managerLecturers.sortLecturersById();
                 break;
                 case 9:
-                    menuCodeGym();
                     break;
+                case 0:System.exit(input);
                 default:
                     System.out.println(" please re-enter");
             }
@@ -75,13 +75,14 @@ public class Menu {
                 6.list of students passing the module
                 7.list of students who did not pass the module     
                 8.Sort Student By Id
-                9.Back to Menu CodeGym""");
+                9.Back to Menu CodeGym
+                0.Exit program""");
         int input = managerStudent.checkInt(scanner);
         switch (input){
             case 1:
                 managerStudent.create();
                 break;
-            case 2:managerStudent.editByName();break;
+            case 2:managerStudent.editById();break;
             case 3:managerStudent.removeId();break;
             case 4:managerStudent.findByName();break;
             case 5:managerStudent.showStudent();break;
@@ -89,7 +90,9 @@ public class Menu {
             case 7:managerStudent.lessorequal75();break;
             case 8:managerStudent.sortStudentById();break;
             case 9:menuCodeGym();
-
+            case 0:System.exit(input);
+            default:
+                System.out.println("please re-enter");
         } }while (true);
     }
 
@@ -112,6 +115,8 @@ public class Menu {
                     loginStudent.checkLoginStudent();
                     break;
                 case 3:System.exit(input);
+                default:
+                    System.out.println("please re-enter:");
             }
         } while (true);
     }

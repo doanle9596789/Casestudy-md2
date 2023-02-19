@@ -81,13 +81,13 @@ public class ManagerStudent {
         listStudent.add(new Student(id, name, age, phoneNumber, email, address,mediumScore));
         iReadWriteFile.writeToFileStudent(listStudent);
     }
-    public void editByName() {
+    public void editById() {
 
-        System.out.println("Enter the student name to edit");
-        String namer = scanner.nextLine();
+        System.out.println("Enter the student id to edit");
+        String id = scanner.nextLine();
         int check = -1;
         for (int i = 0; i < listStudent.size(); i++) {
-            if (listStudent.get(i).getName().equals(namer)) {
+            if (listStudent.get(i).getName().equals(id)) {
                 check = i;
 
             }
@@ -96,7 +96,7 @@ public class ManagerStudent {
         if (check < 0) {
             System.out.println("name is not in the list");
         } else {
-            String id = getID();
+            String id2 = getID();
             String name = getName();
             String address = getAddress();
             String age = getAge();
@@ -104,7 +104,7 @@ public class ManagerStudent {
             String email = getEmail();
             System.out.println("enter mediumScore");
             double mediumScore = checkDouble(scanner);
-            listStudent.get(check).setId(id);
+            listStudent.get(check).setId(id2);
             listStudent.get(check).setName(name);
             listStudent.get(check).setAddress(address);
             listStudent.get(check).setAge(age);
